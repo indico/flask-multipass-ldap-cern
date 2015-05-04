@@ -40,7 +40,7 @@ class CERNLDAPSettingsMixin(object):
         self.ldap_settings.setdefault('user_base', 'DC=cern,DC=ch')
         self.ldap_settings.setdefault('user_filter', '(objectCategory=user)')
         self.ldap_settings.setdefault('gid', 'cn')
-        self.ldap_settings.setdefault('group_base', 'DC=cern, DC=ch')
+        self.ldap_settings.setdefault('group_base', 'OU=Workgroups,DC=cern,DC=ch')
         self.ldap_settings.setdefault('group_filter', '(objectCategory=group)')
         self.ldap_settings.setdefault('member_of_attr', 'memberOf')
         self.ldap_settings.setdefault('ad_group_style', True)
