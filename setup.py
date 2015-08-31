@@ -22,7 +22,8 @@ setup(
     install_requires=['flask-multipass'],
     entry_points={
         'flask_multipass.auth_providers': {
-            'ldap_cern = flask_multipass_ldap_cern:CERNLDAPAuthProvider'
+            'ldap_cern = flask_multipass_ldap_cern:CERNLDAPAuthProvider',
+            'oauth_cern = flask_multipass_ldap_cern:CERNOAuthAuthProvider'
         },
         'flask_multipass.identity_providers': {
             'ldap_cern = flask_multipass_ldap_cern:CERNLDAPIdentityProvider'

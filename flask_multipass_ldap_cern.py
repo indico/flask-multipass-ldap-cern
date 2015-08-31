@@ -8,7 +8,9 @@ from __future__ import unicode_literals
 
 import re
 
+from flask_multipass import AuthInfo, IdentityRetrievalFailed
 from flask_multipass.providers.ldap import LDAPIdentityProvider, LDAPGroup, LDAPAuthProvider
+from flask_multipass.providers.oauth import OAuthAuthProvider
 
 
 def _fix_affiliation(affiliation, _re=re.compile(r'^eduGAIN - ', re.IGNORECASE)):
@@ -64,3 +66,17 @@ class CERNLDAPIdentityProvider(CERNLDAPSettingsMixin, LDAPIdentityProvider):
         for identity_info in super(CERNLDAPIdentityProvider, self).search_identities(criteria, exact=exact):
             fix_affiliations(identity_info)
             yield identity_info
+
+
+class CERNOAuthAuthProvider(OAuthAuthProvider):
+    def _make_auth_info(self, resp):
+        token = resp[self.settings['token_field']]
+        resp = self.oauth_app.get(self.settings['user_info_endpoint'], token=(token, None))
+        if resp.status != 200:
+            raise IdentityRetrievalFailed('Could not retrieve identity data')
+        data = {x['Type']: x['Value'] for x in resp.data}
+        try:
+            identifier = data['http://schemas.xmlsoap.org/claims/CommonName']
+        except KeyError:
+            raise IdentityRetrievalFailed('CommonName was not available')
+        return AuthInfo(self, identifier=identifier)
