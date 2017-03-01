@@ -1,5 +1,5 @@
 # This file is part of Flask-Multipass-LDAP-CERN.
-# Copyright (C) 2015 CERN
+# Copyright (C) 2017 CERN
 #
 # Flask-Multipass-LDAP-CERN is free software; you can redistribute it
 # and/or modify it under the terms of the Revised BSD License.
@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Multipass-LDAP-CERN',
-    version='1.0',
+    version='1.0.1',
     url='https://github.com/indico/flask-multipass-ldap-cern',
     license='BSD',
     author='Indico Team',

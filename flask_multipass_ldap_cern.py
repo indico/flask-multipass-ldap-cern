@@ -1,5 +1,5 @@
 # This file is part of Flask-Multipass-LDAP-CERN.
-# Copyright (C) 2015 CERN
+# Copyright (C) 2017 CERN
 #
 # Flask-Multipass-LDAP-CERN is free software; you can redistribute it
 # and/or modify it under the terms of the Revised BSD License.
@@ -7,7 +7,9 @@
 from __future__ import unicode_literals
 
 import re
+import urllib
 
+from flask import redirect
 from flask_multipass import AuthInfo, IdentityRetrievalFailed
 from flask_multipass.providers.ldap import LDAPIdentityProvider, LDAPGroup, LDAPAuthProvider
 from flask_multipass.providers.oauth import OAuthAuthProvider
@@ -80,3 +82,9 @@ class CERNOAuthAuthProvider(OAuthAuthProvider):
         except KeyError:
             raise IdentityRetrievalFailed('CommonName was not available')
         return AuthInfo(self, identifier=identifier)
+
+    def process_logout(self, return_url):
+        # Allow using a custom logout url so we can redirect to the SSO logout page
+        logout_uri = self.settings.get('logout_uri')
+        if logout_uri:
+            return redirect(logout_uri.format(return_url=urllib.quote(return_url)))
