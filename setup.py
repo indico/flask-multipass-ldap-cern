@@ -11,7 +11,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Multipass-LDAP-CERN',
-    version='1.0.1',
+    version='1.0.2',
     url='https://github.com/indico/flask-multipass-ldap-cern',
     license='BSD',
     author='Indico Team',
@@ -19,7 +19,7 @@ setup(
     py_modules=('flask_multipass_ldap_cern',),
     zip_safe=False,
     platforms='any',
-    install_requires=['flask-multipass'],
+    install_requires=['flask-multipass', 'python-ldap'],
     entry_points={
         'flask_multipass.auth_providers': {
             'ldap_cern = flask_multipass_ldap_cern:CERNLDAPAuthProvider',
