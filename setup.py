@@ -30,7 +30,6 @@ setup(
     long_description=long_description,
     py_modules=('flask_multipass_ldap_cern',),
     zip_safe=False,
-    platforms='any',
     install_requires=['flask-multipass', 'python-ldap'],
     entry_points={
         'flask_multipass.auth_providers': {
