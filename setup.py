@@ -9,6 +9,16 @@ from __future__ import unicode_literals
 from setuptools import setup
 
 
+long_description = '''
+This package provides the ``ldap_cern`` and ``oauth_cern`` auth providers
+and the ``ldap_cern`` identity provider.
+
+These providers are only useful if you are at CERN and intend to use
+Flask-Multipass with the CERN authentication infrastructure (LDAP, OAuth
+or Shibboleth).
+'''.strip()
+
+
 setup(
     name='Flask-Multipass-LDAP-CERN',
     version='1.0.2',
@@ -16,6 +26,8 @@ setup(
     license='BSD',
     author='Indico Team',
     author_email='indico-team@cern.ch',
+    description='CERN-specific Flask-Multipass providers',
+    long_description=long_description,
     py_modules=('flask_multipass_ldap_cern',),
     zip_safe=False,
     platforms='any',
