@@ -24,17 +24,21 @@ def _fix_affiliation(affiliation, _re=re.compile(r'^eduGAIN - ', re.IGNORECASE))
         return _re.sub('', affiliation)
 
 
-def fix_affiliations(identity_info):
+def fix_data(identity_info):
+    # Names containing OpenID URLs
+    first_name = identity_info.data.get('first_name') or ''
+    if 'https://me.yahoo.com' in first_name:
+        identity_info.data['first_name'] = None
+    # Affiliations containing unrelated information
     affiliations = identity_info.data.getlist('affiliation')
-    if not affiliations:
-        return
-    identity_info.data.setlist('affiliation', map(_fix_affiliation, affiliations))
+    if affiliations:
+        identity_info.data.setlist('affiliation', map(_fix_affiliation, affiliations))
 
 
 class CERNLDAPGroup(LDAPGroup):
     def get_members(self):
         for identity_info in super(CERNLDAPGroup, self).get_members():
-            fix_affiliations(identity_info)
+            fix_data(identity_info)
             yield identity_info
 
 
@@ -61,12 +65,12 @@ class CERNLDAPIdentityProvider(CERNLDAPSettingsMixin, LDAPIdentityProvider):
     def _get_identity(self, identifier):
         identity_info = super(CERNLDAPIdentityProvider, self)._get_identity(identifier)
         if identity_info:
-            fix_affiliations(identity_info)
+            fix_data(identity_info)
         return identity_info
 
     def search_identities(self, criteria, exact=False):
         for identity_info in super(CERNLDAPIdentityProvider, self).search_identities(criteria, exact=exact):
-            fix_affiliations(identity_info)
+            fix_data(identity_info)
             yield identity_info
 
 
