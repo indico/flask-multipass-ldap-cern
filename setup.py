@@ -21,7 +21,7 @@ or Shibboleth).
 
 setup(
     name='Flask-Multipass-LDAP-CERN',
-    version='1.0.3',
+    version='1.0.4',
     url='https://github.com/indico/flask-multipass-ldap-cern',
     license='BSD',
     author='Indico Team',

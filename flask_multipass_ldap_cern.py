@@ -80,11 +80,9 @@ class CERNOAuthAuthProvider(OAuthAuthProvider):
         resp = self.oauth_app.get(self.settings['user_info_endpoint'], token=(token, None))
         if resp.status != 200:
             raise IdentityRetrievalFailed('Could not retrieve identity data')
-        data = {x['Type']: x['Value'] for x in resp.data}
-        try:
-            identifier = data['http://schemas.xmlsoap.org/claims/CommonName']
-        except KeyError:
-            raise IdentityRetrievalFailed('CommonName was not available')
+        identifier = resp.data.get('username')
+        if not identifier:
+            raise IdentityRetrievalFailed('Did not receive a username')
         return AuthInfo(self, identifier=identifier)
 
     def process_logout(self, return_url):
