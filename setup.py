@@ -10,8 +10,8 @@ from setuptools import setup
 
 
 long_description = '''
-This package provides the ``ldap_cern`` and ``oauth_cern`` auth providers
-and the ``ldap_cern`` identity provider.
+This package provides the ``ldap_cern`` auth provider and the
+``ldap_cern`` identity provider.
 
 These providers are only useful if you are at CERN and intend to use
 Flask-Multipass with the CERN authentication infrastructure (LDAP, OAuth
@@ -21,7 +21,7 @@ or Shibboleth).
 
 setup(
     name='Flask-Multipass-LDAP-CERN',
-    version='1.0.4',
+    version='2.0',
     url='https://github.com/indico/flask-multipass-ldap-cern',
     license='BSD',
     author='Indico Team',
@@ -30,11 +30,10 @@ setup(
     long_description=long_description,
     py_modules=('flask_multipass_ldap_cern',),
     zip_safe=False,
-    install_requires=['flask-multipass', 'python-ldap'],
+    install_requires=['flask-multipass', 'python-ldap>=3.3.1,<4.0'],
     entry_points={
         'flask_multipass.auth_providers': {
             'ldap_cern = flask_multipass_ldap_cern:CERNLDAPAuthProvider',
-            'oauth_cern = flask_multipass_ldap_cern:CERNOAuthAuthProvider'
         },
         'flask_multipass.identity_providers': {
             'ldap_cern = flask_multipass_ldap_cern:CERNLDAPIdentityProvider'
